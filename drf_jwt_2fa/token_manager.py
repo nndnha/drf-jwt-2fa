@@ -100,9 +100,9 @@ class CodeTokenManager(object):
             return jwt.decode(
                 jwt=token,
                 key=api_settings.CODE_TOKEN_SECRET_KEY,
-                verify=True,
-                algorithms=[self.jwt_algorithm])
-        except jwt.ExpiredSignature:
+                algorithms=self.jwt_algorithm,
+            )
+        except jwt.ExpiredSignatureError:
             raise exceptions.PermissionDenied(_("Signature has expired."))
         except jwt.DecodeError:
             raise exceptions.AuthenticationFailed()
